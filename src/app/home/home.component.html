@@ -1,0 +1,22 @@
+<main class="main">
+  <div class="content">
+    <div class="left-side">
+      <h1 [ngStyle]="headerStyle">Hello, {{ name  | uppercase}}</h1>
+      <p [ngClass]="parrafoClass">Congratulations! Your app is running. 🎉</p>
+      <br>
+      <button (click)="toggleVisibitity()">Mostrar Lista</button>
+
+      <div *ngIf="isListVisible">
+        <h2>Lista de items</h2>
+        <ul>
+          <li *ngFor="let item of items; let i = index">
+            {{i + 1}}. {{item | uppercase}}
+          </li>
+
+        </ul>
+      </div>
+
+      <app-claim-register name="Jorge Ronald Castillo Llerena"></app-claim-register>
+    </div>
+  </div>
+</main>
