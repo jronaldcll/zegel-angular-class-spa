@@ -1,6 +1,26 @@
-<div class="claim">
-    <h2>Bienvenido al libro de reclamaciones ({{name}})</h2>
-    <p>Desde aqui podras gesionar todas los reclamos que requieras</p>
-    <button (click)="saveClaim()" class="btn btn-primary">Registrar reclamo</button>
-    <button (click)="returnMain()" class="btn btn-primary">Regresar al menú</button>
-</div>
+<form class="m-4" [formGroup]="claimbookForm" (ngSubmit)="saveClaim()">
+  <mat-card appearance="outlined">
+    <mat-card-header>
+      <mat-card-title> Información del consumidor reclamante</mat-card-title>
+    </mat-card-header>
+    <br />
+    <mat-card-content>
+      <div class="row">
+        <div class="col-6">
+          <mat-radio-group aria-label="¿Qué quiere presentar? ">
+            <mat-radio-button value="1">Queja</mat-radio-button>
+            <mat-radio-button value="2">Reclamación</mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <mat-form-field appearance="outline">
+            <mat-label>Nombre</mat-label>
+            <input matInput formControlName="nombres" />
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</form>

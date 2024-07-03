@@ -1,14 +1,24 @@
-import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { ClaimRegisterService } from './claim-register.service';
 import { ClaimRegister } from './claim-register.model';
-import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field'
+import { MatInputModule } from '@angular/material/input'
+import {MatCardModule} from '@angular/material/card';
+import {MatRadioModule} from '@angular/material/radio';
+
 
 @Component({
   selector: 'app-claim-register',
   standalone: true,
-  imports: [CommonModule],
+  imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatCardModule,
+    MatRadioModule],
   templateUrl: './claim-register.component.html',
   styleUrl: './claim-register.component.scss'
 })
@@ -17,7 +27,7 @@ export class ClaimRegisterComponent {
   claimbookForm: UntypedFormGroup
   constructor(
     private router: Router,
-    public claimRegisterService: ClaimRegisterService,
+    // public claimRegisterService: ClaimRegisterService,
     private fb: UntypedFormBuilder
   ) {
     const blank ={} as ClaimRegister;
@@ -25,22 +35,22 @@ export class ClaimRegisterComponent {
     this.claimbookForm = this.createClaimBookForm();
   }
 
-  @Input() name: string = "Claim";
+  // @Input() name: string = "Claim";
 
   createClaimBookForm(): UntypedFormGroup{
     return this.fb.group({
-      tipo_reclamo: [this.claimbook.tipo_reclamo],
-      fecha_reclamo: [this.claimbook.fecha_reclamo],
-      nombres: [this.claimbook.nombres],
-      apellidos: [this.claimbook.apellidos],
-      correo: [this.claimbook.correo],
-      telefono: [this.claimbook.telefono],
-      pais: [this.claimbook.pais],
-      ciudad: [this.claimbook.ciudad],
-      direccion: [this.claimbook.direccion],
-      tipo_identificacion: [this.claimbook.tipo_identificacion],
-      numero_identificacion: [this.claimbook.numero_identificacion],
-      detalle_reclamo: [this.claimbook.detalle_reclamo],
+      tipo_reclamo: [this.claimbook.tipo_reclamo, [Validators.required]],
+      fecha_reclamo: [this.claimbook.fecha_reclamo, [Validators.required]],
+      nombres: [this.claimbook.nombres, [Validators.required, Validators.pattern('[a-zA-Z]+')]],
+      apellidos: [this.claimbook.apellidos, [Validators.required]],
+      correo: [this.claimbook.correo, [Validators.required, Validators.email]],
+      telefono: [this.claimbook.telefono, [Validators.required, Validators.minLength(7)]],
+      pais: [this.claimbook.pais, [Validators.required]],
+      ciudad: [this.claimbook.ciudad, [Validators.required]],
+      direccion: [this.claimbook.direccion, [Validators.required]],
+      tipo_identificacion: [this.claimbook.tipo_identificacion, [Validators.required]],
+      numero_identificacion: [this.claimbook.numero_identificacion, [Validators.required]],
+      detalle_reclamo: [this.claimbook.detalle_reclamo, [Validators.required]],
     });
   }
 
@@ -49,7 +59,7 @@ export class ClaimRegisterComponent {
   }
 
   public saveClaim(): void{
-    this.claimRegisterService.addClaimbook(this.claimbookForm.getRawValue());
+    // this.claimRegisterService.addClaimbook(this.claimbookForm.getRawValue());
   }
 
 }
