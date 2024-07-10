@@ -3,10 +3,16 @@ import { Router } from '@angular/router';
 import { ClaimRegisterService } from './claim-register.service';
 import { ClaimRegister } from './claim-register.model';
 import { FormsModule, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field'
+import { MatError, MatFormFieldModule } from '@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input'
 import {MatCardModule} from '@angular/material/card';
 import {MatRadioModule} from '@angular/material/radio';
+import { CommonModule } from '@angular/common';
+import { MatSelectModule } from '@angular/material/select';
+import { MatOptionModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatButtonModule } from '@angular/material/button';
 
 
 @Component({
@@ -18,11 +24,34 @@ import {MatRadioModule} from '@angular/material/radio';
     MatFormFieldModule,
     MatInputModule,
     MatCardModule,
-    MatRadioModule],
+    MatRadioModule,
+    MatSelectModule,
+    MatOptionModule,
+    MatDatepickerModule,
+    MatButtonToggleModule,
+    MatButtonModule,
+    MatError,
+    CommonModule],
   templateUrl: './claim-register.component.html',
   styleUrl: './claim-register.component.scss'
 })
 export class ClaimRegisterComponent {
+
+  showLoading = false;
+  disable = false;
+  message: any;
+  checked = false;
+  hasUnitNumber = false;
+  urlTree:any;
+  product:any ='PE';
+  countrys = [
+    { name: 'Perú', abbreviation: 'PE' },
+  ];
+  cssUrl: string ="";
+
+
+
+
   claimbook: ClaimRegister
   claimbookForm: UntypedFormGroup
   constructor(
@@ -36,6 +65,16 @@ export class ClaimRegisterComponent {
   }
 
   // @Input() name: string = "Claim";
+  ngOnInit(){
+    if (this.product == 'PE') {
+      console.log('Pago Efectivo');
+    } else {
+      console.log('Syndeo');
+      this.changeStyle();
+    }
+  }
+
+
 
   createClaimBookForm(): UntypedFormGroup{
     return this.fb.group({
@@ -62,4 +101,11 @@ export class ClaimRegisterComponent {
     // this.claimRegisterService.addClaimbook(this.claimbookForm.getRawValue());
   }
 
+
+  changeStyle() {
+    this.cssUrl = (this.cssUrl === `/assets/styles/stylesSY.scss`) ? `/assets/styles/stylesPE.scss` : `/assets/styles/stylesSY.scss`;
+  }
+
+
 }
+

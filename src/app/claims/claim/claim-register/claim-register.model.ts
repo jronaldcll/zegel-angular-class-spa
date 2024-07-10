@@ -19,7 +19,7 @@ export class ClaimRegister{
       this.apellidos = claimRegister.apellidos || 'Castillo';
       this.correo = claimRegister.correo || 'fjorcastil@zegel.edu.pe';
       this.telefono = claimRegister.telefono || '9999999';
-      this.pais = claimRegister.pais || 'Perú';
+      this.pais = claimRegister.pais || 'PE';
       this.ciudad = claimRegister.ciudad || 'Lima';
       this.direccion = claimRegister.direccion || 'Lima';
       this.tipo_identificacion = claimRegister.tipo_identificacion || 'DNI';

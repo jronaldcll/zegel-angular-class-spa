@@ -1,26 +1,166 @@
-<form class="m-4" [formGroup]="claimbookForm" (ngSubmit)="saveClaim()">
-  <mat-card appearance="outlined">
+<div class="page-overlay-wrapper" *ngIf="showLoading">
+  <div class="bee-spinner"></div>
+</div>
+
+<form [formGroup]="claimbookForm" (ngSubmit)="saveClaim()">
+    <mat-card class="claim-card">
+      <mat-card-content>
+        <div class="row">
+          <div class="col-md-3 centro">
+          <img src="assets/zegel.png" class="img-fluid" alt="Responsive image">
+          </div>
+        <div class="col-md-9 centro" style="float:none;margin:auto;" >
+          <h1><strong> Libro de Reclamaciones</strong></h1>
+        </div>
+      </div>
+      </mat-card-content>
+    </mat-card>
+  <mat-card class="claim-card">
     <mat-card-header>
-      <mat-card-title> Información del consumidor reclamante</mat-card-title>
+      <mat-card-title>Información del consumidor reclamante</mat-card-title>
     </mat-card-header>
-    <br />
+    <br>
     <mat-card-content>
       <div class="row">
-        <div class="col-6">
-          <mat-radio-group aria-label="¿Qué quiere presentar? ">
+        <label>¿Qué quiere presentar? *</label>
+        <div class="col">
+          <mat-radio-group formControlName="tipo_reclamo">
             <mat-radio-button value="1">Queja</mat-radio-button>
-            <mat-radio-button value="2">Reclamación</mat-radio-button>
+            <mat-radio-button value="0">Reclamación</mat-radio-button>
           </mat-radio-group>
         </div>
       </div>
       <div class="row">
-        <div class="col-6">
-          <mat-form-field appearance="outline">
-            <mat-label>Nombre</mat-label>
-            <input matInput formControlName="nombres" />
+        <div class="col">
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Nombres</mat-label>
+            <input matInput placeholder="Nombres" formControlName="nombres">
+            <mat-error *ngIf="claimbookForm.controls['nombres'].hasError('required')">
+              Sus nombres son <strong>requeridos</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Apellidos</mat-label>
+            <input matInput placeholder="Apellidos" formControlName="apellidos">
+            <mat-error *ngIf="claimbookForm.controls['apellidos'].hasError('required')">
+              Sus apellidos son <strong>requeridos</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Correo</mat-label>
+            <input matInput placeholder="Correo" formControlName="correo">
+            <mat-error *ngIf="claimbookForm.controls['correo'].hasError('required')">
+              Sus correo son <strong>requeridos</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Teléfono</mat-label>
+            <input matInput placeholder="Teléfono" formControlName="telefono">
+            <mat-error *ngIf="claimbookForm.controls['telefono'].hasError('required')">
+              Sus teléfono son <strong>requeridos</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>País</mat-label>
+            <mat-select placeholder="País" formControlName="pais">
+              <mat-option *ngFor="let country of countrys" [value]="country.abbreviation">
+                {{ country.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="claimbookForm.controls['pais'].hasError('required')">
+              El País es <strong>requerido</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Ciudad</mat-label>
+            <input matInput placeholder="Ciudad" formControlName="ciudad">
+            <mat-error *ngIf="claimbookForm.controls['ciudad'].hasError('required')">
+              La ciudad es <strong>requerida</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Dirección</mat-label>
+            <textarea matInput placeholder="Dirección" formControlName="direccion"></textarea>
+            <mat-error *ngIf="claimbookForm.controls['direccion'].hasError('required')">
+              Su dirección es <strong>requerida</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Idendificación</mat-label>
+            <mat-select placeholder="Idendificación" formControlName="tipo_identificacion">
+              <mat-option [value]="'DNI'">
+                DNI
+              </mat-option>
+              <mat-option [value]="'CE'">
+                CE
+              </mat-option>
+              <mat-option [value]="'RUC'">
+                RUC
+              </mat-option>
+              <mat-option [value]="'Pasaporte'">
+                Pasaporte
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="claimbookForm.controls['tipo_identificacion'].hasError('required')">
+              La identificacíom es <strong>requerida</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Número de documento</mat-label>
+            <input matInput placeholder="Número de documento" formControlName="numero_identificacion">
+            <mat-error *ngIf="claimbookForm.controls['numero_identificacion'].hasError('required')">
+              El número de documento es <strong>requerido</strong>
+            </mat-error>
           </mat-form-field>
         </div>
       </div>
     </mat-card-content>
   </mat-card>
+  <mat-card class="claim-card">
+    <mat-card-header>
+      <mat-card-title>Detalle de la reclamación</mat-card-title>
+    </mat-card-header>
+    <br>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Detalle o queja</mat-label>
+            <textarea matInput placeholder="Detalle o queja" formControlName="detalle_reclamo"></textarea>
+            <mat-error *ngIf="claimbookForm.controls['detalle_reclamo'].hasError('required')">
+              Detalle o queja <strong>requerida</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button class ="btn-space" mat-raised-button color="primary" [disabled]="!claimbookForm.valid || disable">Enviar</button>
+    </mat-card-actions>
+  </mat-card>
 </form>
+<div *ngIf="message" [ngClass]="{ 'alert': message, 'alert-success': message.type === 'success', 'alert-danger': message.type === 'error' }">{{message.text}}</div>
