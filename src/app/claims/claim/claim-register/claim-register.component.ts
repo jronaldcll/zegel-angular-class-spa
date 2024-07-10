@@ -1,19 +1,25 @@
 import { Component, Input } from '@angular/core';
+import {Subscription } from 'rxjs'
 import { Router } from '@angular/router';
 import { ClaimRegisterService } from './claim-register.service';
 import { ClaimRegister } from './claim-register.model';
-import { FormsModule, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { MatError, MatFormFieldModule } from '@angular/material/form-field'
-import { MatInputModule } from '@angular/material/input'
-import {MatCardModule} from '@angular/material/card';
-import {MatRadioModule} from '@angular/material/radio';
+import {
+  FormsModule,
+  ReactiveFormsModule,
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
+import { MatError, MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatCardModule } from '@angular/material/card';
+import { MatRadioModule } from '@angular/material/radio';
 import { CommonModule } from '@angular/common';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatButtonModule } from '@angular/material/button';
-
 
 @Component({
   selector: 'app-claim-register',
@@ -31,41 +37,36 @@ import { MatButtonModule } from '@angular/material/button';
     MatButtonToggleModule,
     MatButtonModule,
     MatError,
-    CommonModule],
+    CommonModule,
+  ],
   templateUrl: './claim-register.component.html',
-  styleUrl: './claim-register.component.scss'
+  styleUrl: './claim-register.component.scss',
 })
 export class ClaimRegisterComponent {
-
   showLoading = false;
   disable = false;
   message: any;
   checked = false;
   hasUnitNumber = false;
-  urlTree:any;
-  product:any ='PE';
-  countrys = [
-    { name: 'Perú', abbreviation: 'PE' },
-  ];
-  cssUrl: string ="";
+  urlTree: any;
+  product: any = 'PE';
+  countrys = [{ name: 'Perú', abbreviation: 'PE' }];
+  cssUrl: string = '';
 
-
-
-
-  claimbook: ClaimRegister
-  claimbookForm: UntypedFormGroup
+  claimbook: ClaimRegister;
+  claimbookForm: UntypedFormGroup;
   constructor(
     private router: Router,
-    // public claimRegisterService: ClaimRegisterService,
+    public claimRegisterService: ClaimRegisterService,
     private fb: UntypedFormBuilder
   ) {
-    const blank ={} as ClaimRegister;
+    const blank = {} as ClaimRegister;
     this.claimbook = new ClaimRegister(blank);
     this.claimbookForm = this.createClaimBookForm();
   }
 
   // @Input() name: string = "Claim";
-  ngOnInit(){
+  ngOnInit() {
     if (this.product == 'PE') {
       console.log('Pago Efectivo');
     } else {
@@ -74,21 +75,31 @@ export class ClaimRegisterComponent {
     }
   }
 
-
-
-  createClaimBookForm(): UntypedFormGroup{
+  createClaimBookForm(): UntypedFormGroup {
     return this.fb.group({
       tipo_reclamo: [this.claimbook.tipo_reclamo, [Validators.required]],
       fecha_reclamo: [this.claimbook.fecha_reclamo, [Validators.required]],
-      nombres: [this.claimbook.nombres, [Validators.required, Validators.pattern('[a-zA-Z]+')]],
+      nombres: [
+        this.claimbook.nombres,
+        [Validators.required, Validators.pattern('[a-zA-Z]+')],
+      ],
       apellidos: [this.claimbook.apellidos, [Validators.required]],
       correo: [this.claimbook.correo, [Validators.required, Validators.email]],
-      telefono: [this.claimbook.telefono, [Validators.required, Validators.minLength(7)]],
+      telefono: [
+        this.claimbook.telefono,
+        [Validators.required, Validators.minLength(7)],
+      ],
       pais: [this.claimbook.pais, [Validators.required]],
       ciudad: [this.claimbook.ciudad, [Validators.required]],
       direccion: [this.claimbook.direccion, [Validators.required]],
-      tipo_identificacion: [this.claimbook.tipo_identificacion, [Validators.required]],
-      numero_identificacion: [this.claimbook.numero_identificacion, [Validators.required]],
+      tipo_identificacion: [
+        this.claimbook.tipo_identificacion,
+        [Validators.required],
+      ],
+      numero_identificacion: [
+        this.claimbook.numero_identificacion,
+        [Validators.required],
+      ],
       detalle_reclamo: [this.claimbook.detalle_reclamo, [Validators.required]],
     });
   }
@@ -97,15 +108,22 @@ export class ClaimRegisterComponent {
     this.router.navigate(['/Claims/claim/main']);
   }
 
-  public saveClaim(): void{
-    // this.claimRegisterService.addClaimbook(this.claimbookForm.getRawValue());
-  }
+  public async saveClaim() {
 
+    try {
+      await this.claimRegisterService.addClaimbook(this.claimbookForm.getRawValue());
+
+    } catch (error) {
+      console.error(error);
+      alert('Ocurrión un inconveniente. Por favor, intente registar más tarde');
+    }
+    // console.log('Payload - Libro de reclamaciones', this.claimbookForm.value);
+  }
 
   changeStyle() {
-    this.cssUrl = (this.cssUrl === `/assets/styles/stylesSY.scss`) ? `/assets/styles/stylesPE.scss` : `/assets/styles/stylesSY.scss`;
+    this.cssUrl =
+      this.cssUrl === `/assets/styles/stylesSY.scss`
+        ? `/assets/styles/stylesPE.scss`
+        : `/assets/styles/stylesSY.scss`;
   }
-
-
 }
-

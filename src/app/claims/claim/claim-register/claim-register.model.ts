@@ -1,5 +1,5 @@
 export class ClaimRegister{
-    tipo_reclamo: number;
+    tipo_reclamo: string;
     fecha_reclamo: string;
     nombres: string;
     apellidos: string;
@@ -13,7 +13,7 @@ export class ClaimRegister{
     detalle_reclamo: string;
 
     constructor(claimRegister: ClaimRegister){
-      this.tipo_reclamo = claimRegister.tipo_reclamo || 1;
+      this.tipo_reclamo = claimRegister.tipo_reclamo || "true";
       this.fecha_reclamo = claimRegister.fecha_reclamo || '2024-06-21';
       this.nombres = claimRegister.nombres || 'Ronald';
       this.apellidos = claimRegister.apellidos || 'Castillo';
