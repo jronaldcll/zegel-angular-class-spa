@@ -14,6 +14,11 @@ export const APP_ROUTE: Route[] = [
         path: 'Claims',
         loadChildren: () =>
           import('./claims/claims.routes').then((m)=> m.CLAIMS_ROUTE),
+      },
+      {
+        path: 'Products',
+        loadChildren: () =>
+          import('./products/products.routes').then((m)=> m.PRODUCT_ROUTE),
       }
     ]
   }

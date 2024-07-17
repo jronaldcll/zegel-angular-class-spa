@@ -1,0 +1,78 @@
+<div class="page-overlay-wrapper" *ngIf="showLoading">
+  <div class="bee-spinner"></div>
+</div>
+
+<form [formGroup]="productForm" (ngSubmit)="saveProduct()">
+    <mat-card class="claim-card">
+      <mat-card-content>
+        <div class="row">
+          <div class="col-md-2 centro">
+          <img src="assets/zegel.png" class="img-fluid" alt="Responsive image">
+          </div>
+        <div class="col-md-9 centro" style="float:none;margin:auto;" >
+          <h1><strong> Registrar Producto</strong></h1>
+        </div>
+      </div>
+      </mat-card-content>
+    </mat-card>
+  <mat-card class="claim-card">
+    <mat-card-header>
+      <mat-card-title>Información del Producto</mat-card-title>
+    </mat-card-header>
+    <br>
+    <mat-card-content>
+        <div class="col">
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Nombres</mat-label>
+            <input matInput placeholder="Nombres" formControlName="title">
+            <mat-error *ngIf="productForm.controls['title'].hasError('required')">
+              El nombre del producto es <strong>requerido</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Precio</mat-label>
+            <input matInput placeholder="precio" formControlName="price">
+            <mat-error *ngIf="productForm.controls['price'].hasError('required')">
+              El precio es <strong>requerido</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Id Categoria</mat-label>
+            <textarea matInput placeholder="Id Categoria" formControlName="categoryId"></textarea>
+            <mat-error *ngIf="productForm.controls['categoryId'].hasError('required')">
+              Il id de la categoria es <strong>requerida</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="claim-card">
+    <mat-card-header>
+      <mat-card-title>Detalle del producto</mat-card-title>
+    </mat-card-header>
+    <br>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Descripción</mat-label>
+            <textarea matInput placeholder="Descripción" formControlName="description"></textarea>
+            <mat-error *ngIf="productForm.controls['description'].hasError('required')">
+              La descripción es <strong>requerida</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button class ="btn-space" mat-raised-button color="primary" [disabled]="!productForm.valid || disable">Enviar</button>
+    </mat-card-actions>
+  </mat-card>
+</form>
+<div *ngIf="message" [ngClass]="{ 'alert': message, 'alert-success': message.type === 'success', 'alert-danger': message.type === 'error' }">{{message.text}}</div>
