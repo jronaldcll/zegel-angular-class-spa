@@ -1,0 +1,13 @@
+.row {
+  display: flex;
+  flex-direction: row;
+  margin: 6px;
+}
+.products {
+  margin: 12px;
+}
+
+.col {
+  flex: 1;
+  margin-right: 5px;
+}

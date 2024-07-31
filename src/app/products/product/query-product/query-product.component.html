@@ -1,0 +1,21 @@
+<div class="products">
+  <h2>Bienvenido al centro de consulta de productos</h2>
+  <p>Desde aqui podras consultar los productos creados</p>
+
+  <form (ngSubmit)="queryProduct()">
+    <div class="row">
+      <div class="col">
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Id del Producto</mat-label>
+          <input matInput placeholder="Id del Producto" [(ngModel)]="idProduct" name="idProduct" type="number"/>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <button class ="btn-space" mat-raised-button color="primary" type="submit">Consultar</button>
+        <button (click)="registerProduct()" class ="btn-space" mat-raised-button color="primary">Registrar Producto</button>
+      </div>
+    </div>
+  </form>
+</div>

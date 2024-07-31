@@ -43,9 +43,9 @@
         <div class="col">
           <mat-form-field class="full-width" appearance="outline">
             <mat-label>Id Categoria</mat-label>
-            <textarea matInput placeholder="Id Categoria" formControlName="categoryId"></textarea>
+            <input matInput type="number" placeholder="Id Categoria" formControlName="categoryId">
             <mat-error *ngIf="productForm.controls['categoryId'].hasError('required')">
-              Il id de la categoria es <strong>requerida</strong>
+              El id de la categoria es <strong>requerida</strong>
             </mat-error>
           </mat-form-field>
         </div>
