@@ -2,7 +2,7 @@
   <div class="bee-spinner"></div>
 </div>
 
-<form [formGroup]="productForm" (ngSubmit)="saveProduct()">
+<form [formGroup]="productForm">
     <mat-card class="claim-card">
       <mat-card-content>
         <div class="row">
@@ -71,7 +71,8 @@
       </div>
     </mat-card-content>
     <mat-card-actions>
-      <button class ="btn-space" mat-raised-button color="primary" [disabled]="!productForm.valid || disable">Enviar</button>
+      <button type="button" (click)="saveProduct()" class ="btn-space" mat-raised-button color="primary" [disabled]="!productForm.valid || disable">Enviar</button>
+      <button type="button" (click)="returnMain()" class ="btn-space" mat-raised-button color="primary">Cancelar</button>
     </mat-card-actions>
   </mat-card>
 </form>

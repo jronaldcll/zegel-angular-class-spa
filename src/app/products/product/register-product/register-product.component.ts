@@ -67,7 +67,7 @@ export class RegisterProductComponent {
   }
 
   returnMain(): void {
-    this.router.navigate(['/Products/product/registrar-producto']);
+    this.router.navigate(['/Products/product/consultar-producto']);
   }
 
   public async saveProduct() {
