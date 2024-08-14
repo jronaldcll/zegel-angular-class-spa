@@ -58,8 +58,56 @@ export class ProductRegisterService extends UnsubscribeOnDestroyAdapter{
         })
       )
     }
+    getAllProducts(): Observable<any[]>{
+      return this.httpClient.get<any[]>(this.API_URL)
+      .pipe(
+        catchError((err: HttpErrorResponse)=>{
+          console.log(err.name + ' ' + err.message);
+            if(err.status=== 403){
+              Swal.fire({
+                icon: "error",
+                title: "Error de solicitud",
+                text: `Hubo un problema con la solicitud. Por favor, verifica los datos`,
+              })
+            }
+            throw err;
+        })
+      )
+    }
+    getCategories(): Observable<any[]>{
+      return this.httpClient.get<any[]>('https://api.escuelajs.co/api/v1/categories')
+      .pipe(
+        catchError((err: HttpErrorResponse)=>{
+          console.log(err.name + ' ' + err.message);
+            if(err.status=== 403){
+              Swal.fire({
+                icon: "error",
+                title: "Error de solicitud",
+                text: `Hubo un problema con la solicitud. Por favor, verifica los datos`,
+              })
+            }
+            throw err;
+        })
+      )
+    }
     updateProduct(idProduct: string, product: ProductRegister): Observable<any>{
       return this.httpClient.put<any>(`${this.API_URL}/${idProduct}`, product)
+      .pipe(
+        catchError((err: HttpErrorResponse)=>{
+          console.log(err.name + ' ' + err.message);
+            if(err.status=== 403){
+              Swal.fire({
+                icon: "error",
+                title: "Error de solicitud",
+                text: `Hubo un problema con la solicitud. Por favor, verifica los datos`,
+              })
+            }
+            throw err;
+        })
+      )
+    }
+    deleteProduct(idProduct: number): Observable<any>{
+      return this.httpClient.delete<any>(`${this.API_URL}/${idProduct}`)
       .pipe(
         catchError((err: HttpErrorResponse)=>{
           console.log(err.name + ' ' + err.message);

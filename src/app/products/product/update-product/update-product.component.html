@@ -40,15 +40,26 @@
           </mat-form-field>
         </div>
       <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width" appearance="outline">
-            <mat-label>Id Categoria</mat-label>
-            <input matInput type="number" placeholder="Id Categoria" formControlName="categoryId">
-            <mat-error *ngIf="productForm.controls['categoryId'].hasError('required')">
-              El id de la categoria es <strong>requerida</strong>
-            </mat-error>
-          </mat-form-field>
-        </div>
+      <!-- Autocomplete for Category -->
+      <div class="col">
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Categoría</mat-label>
+          <input type="text"
+                 placeholder="Selecciona una categoría"
+                 aria-label="Categoría"
+                 matInput
+                 [formControl]="categoryControl"
+                 [matAutocomplete]="auto">
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let option of filteredCategories | async" [value]="option.name">
+              {{ option.name }}
+            </mat-option>
+          </mat-autocomplete>
+          <mat-error *ngIf="productForm.controls['categoryId'].hasError('required')">
+            La categoría es <strong>requerida</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
       </div>
     </mat-card-content>
   </mat-card>
